@@ -1,0 +1,44 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Vatsal Sanjay
+N:Sanjay;Vatsal;;;
+item1.EMAIL;TYPE=INTERNET:vatsalsy@comphy-lab.org
+item1.X-ABLabel:main
+EMAIL;TYPE=INTERNET;TYPE=WORK:vatsalsanjay@gmail.com
+item2.EMAIL;TYPE=INTERNET:vatsalsanjay@comphy-lab.org
+item2.X-ABLabel:email
+item3.EMAIL;TYPE=INTERNET:v.sanjay@utwente.nl
+item3.X-ABLabel:_$!<School>!$_
+EMAIL;TYPE=INTERNET;TYPE=HOME:vatsalsanjay2308@gmail.com
+item4.EMAIL;TYPE=INTERNET:vatsalsanjay@icloud.com
+item4.X-ABLabel:iCloud
+EMAIL;TYPE=INTERNET:contact@vatsalsanjay.com
+item5.EMAIL;TYPE=INTERNET:v.sanjay@me.iitr.ac.in
+item5.X-ABLabel:_$!<School>!$_
+TEL;TYPE=CELL:+91 78959 40240
+TEL;TYPE=WORK:+31 6 87668747
+ADR;TYPE=HOME:;;Ribbeltsweg 26;Enschede;;7531BK;Netherlands;Ribbeltsweg 26
+ \nEnschede 7531BK\nNetherlands
+ADR;TYPE=HOME:;;Ribbeltsweg 26;Enschede;Overijssel;7531 BK;Netherlands;Ribb
+ eltsweg 26\nEnschede\, Overijssel 7531 BK\nNetherlands
+ADR;TYPE=WORK:;;De Horst 2;Enschede;;7522 NB;Netherlands;De Horst 2\nEnsche
+ de 7522 NB\nNetherlands
+ADR;TYPE=WORK:;;De Horst 2;Enschede;Overijssel;7522 LW;Netherlands;De Horst
+  2\nEnschede\, Overijssel 7522 LW\nNetherlands
+ORG:Physics of Fluids\, University of Twente
+BDAY:19960205
+item6.URL:https\://comphy-lab.org
+item6.X-ABLabel:_$!<HomePage>!$_
+URL;TYPE=HOME:https\://vatsalsanjay.com
+item7.X-ABDATE:20211020
+item7.X-ABLabel:_$!<Anniversary>!$_
+item8.X-ABDATE:20220505
+item8.X-ABLabel:MAnniversary
+item9.X-ABDATE:20171210
+item9.X-ABLabel:Custom
+NOTE:Photo: https\://lh3.googleusercontent.com/contacts/AG6tpzEg0kx-1C-RoHn
+ 8qmiyxrzv9R3iNd3PcxSgrqQ8FlLk834Fvhwe
+PHOTO:https://lh3.googleusercontent.com/contacts/AG6tpzFS3WCTdcE-lS5AyKVLKf
+ b6ARDxKhEMaDVX-z-o7iA1E4AxViPq
+CATEGORIES:myContacts
+END:VCARD

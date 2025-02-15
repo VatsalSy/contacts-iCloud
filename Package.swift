@@ -9,18 +9,32 @@ let package = Package(
         .macOS(.v12)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .executable(
             name: "contacts-iCloud",
             targets: ["contacts-iCloud"]
+        ),
+        .executable(
+            name: "google-vcf-export",
+            targets: ["google-vcf-export"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.6.0"),
+        .package(url: "https://github.com/JohnSundell/Files", from: "4.0.0")
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "contacts-iCloud",
             dependencies: []
+        ),
+        .executableTarget(
+            name: "google-vcf-export",
+            dependencies: [
+                .product(name: "Vapor", package: "vapor"),
+                "SwiftSoup",
+                "Files"
+            ]
         ),
         .testTarget(
             name: "contacts-iCloudTests",

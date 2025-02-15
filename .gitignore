@@ -8,3 +8,8 @@ DerivedData/
 .netrc
 contacts
 output.csv
+.envlocal
+
+# windsurf rules
+.windsurfrules
+.cursorrules

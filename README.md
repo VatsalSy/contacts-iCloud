@@ -57,6 +57,7 @@ This tool also includes a utility to export contacts directly from Google Contac
 GOOGLE_CLIENT_ID=your_client_id
 GOOGLE_CLIENT_SECRET=your_client_secret
 GOOGLE_REDIRECT_URI=http://localhost:8080/oauth/callback
+GOOGLE_TOKEN=
 ```
 
 ### Usage
@@ -68,9 +69,14 @@ swift run google-vcf-export output.vcf
 ```
 
 This will:
-1. Open your default browser for Google OAuth authentication
-2. Request permission to access your contacts
+1. Check for an existing authentication token in `.envlocal`
+2. If no token exists:
+   - Open your default browser for Google OAuth authentication
+   - Request permission to access your contacts
+   - Save the token in `.envlocal` for future use
 3. Export all contacts to the specified VCF file
+
+The tool will remember your authentication after the first use, so you won't need to re-authenticate each time. The token is stored locally in your `.envlocal` file and is not committed to git.
 
 The exported VCF file can then be imported into other contact management systems.
 

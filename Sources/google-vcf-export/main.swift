@@ -8,13 +8,15 @@ struct GoogleConfig {
     let clientId: String
     let clientSecret: String
     let redirectUri: String
+    let token: String?
     
     static func load() throws -> GoogleConfig {
         // Try to load from environment first
         if let clientId = ProcessInfo.processInfo.environment["GOOGLE_CLIENT_ID"],
            let clientSecret = ProcessInfo.processInfo.environment["GOOGLE_CLIENT_SECRET"],
            let redirectUri = ProcessInfo.processInfo.environment["GOOGLE_REDIRECT_URI"] {
-            return GoogleConfig(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri)
+            let token = ProcessInfo.processInfo.environment["GOOGLE_TOKEN"]
+            return GoogleConfig(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri, token: token)
         }
         
         // If not in environment, try to load from .envlocal file
@@ -42,7 +44,7 @@ struct GoogleConfig {
         guard let clientId = config["GOOGLE_CLIENT_ID"],
               let clientSecret = config["GOOGLE_CLIENT_SECRET"],
               let redirectUri = config["GOOGLE_REDIRECT_URI"] else {
-            print("Error: Missing required environment variables in .envlocal file.")
+            
             print("Please ensure your .envlocal file contains:")
             print("GOOGLE_CLIENT_ID=your_client_id")
             print("GOOGLE_CLIENT_SECRET=your_client_secret")
@@ -50,7 +52,40 @@ struct GoogleConfig {
             throw EnvError.missingConfiguration
         }
         
-        return GoogleConfig(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri)
+        let token = config["GOOGLE_TOKEN"]
+        return GoogleConfig(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri, token: token)
+    }
+    
+    static func saveToken(_ token: String) throws {
+        let fileManager = FileManager.default
+        let currentPath = fileManager.currentDirectoryPath
+        let envPath = (currentPath as NSString).appendingPathComponent(".envlocal")
+        
+        guard fileManager.fileExists(atPath: envPath),
+              var envContents = try? String(contentsOfFile: envPath, encoding: .utf8) else {
+            throw EnvError.missingConfiguration
+        }
+        
+        // Split into lines and process
+        var lines = envContents.components(separatedBy: .newlines)
+        var tokenFound = false
+        
+        // Update or add token
+        for (index, line) in lines.enumerated() {
+            if line.starts(with: "GOOGLE_TOKEN=") {
+                lines[index] = "GOOGLE_TOKEN=\(token)"
+                tokenFound = true
+                break
+            }
+        }
+        
+        if !tokenFound {
+            lines.append("GOOGLE_TOKEN=\(token)")
+        }
+        
+        // Write back to file
+        envContents = lines.joined(separator: "\n")
+        try envContents.write(toFile: envPath, atomically: true, encoding: .utf8)
     }
 }
 
@@ -69,6 +104,7 @@ class OAuthHandler {
     init(config: GoogleConfig) async throws {
         self.config = config
         self.app = try await Application.make()
+        self.accessToken = config.token
         
         setupRoutes()
     }
@@ -109,6 +145,7 @@ class OAuthHandler {
             
             if let token = json?["access_token"] as? String {
                 self.accessToken = token
+                try GoogleConfig.saveToken(token)
                 semaphore.signal()
             }
         } catch {
@@ -118,6 +155,11 @@ class OAuthHandler {
     }
     
     func authorize() throws -> String {
+        // If we already have a token, return it
+        if let existingToken = accessToken {
+            return existingToken
+        }
+        
         let scopes = ["https://www.googleapis.com/auth/contacts.readonly"]
         let authURL = "https://accounts.google.com/o/oauth2/v2/auth"
         + "?client_id=\(config.clientId)"

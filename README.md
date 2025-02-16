@@ -44,6 +44,36 @@ For example, if your .vcf files are in a directory called "contacts" and you wan
 swift run contacts-iCloud ./contacts google-contacts.csv
 ```
 
+## Google Contacts Export
+
+This tool also includes a utility to export contacts directly from Google Contacts to VCF format.
+
+### Setup
+
+1. Create a Google Cloud Project and enable the People API
+2. Create OAuth 2.0 credentials
+3. Create a `.envlocal` file in the project root with:
+```bash
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:8080/oauth/callback
+```
+
+### Usage
+
+Run the Google export tool by providing the output file path:
+
+```bash
+swift run google-vcf-export output.vcf
+```
+
+This will:
+1. Open your default browser for Google OAuth authentication
+2. Request permission to access your contacts
+3. Export all contacts to the specified VCF file
+
+The exported VCF file can then be imported into other contact management systems.
+
 ## CSV Format
 
 The generated CSV file includes the following columns:

@@ -80,6 +80,41 @@ The tool will remember your authentication after the first use, so you won't nee
 
 The exported VCF file can then be imported into other contact management systems.
 
+## Sync to iCloud Contacts
+
+This tool includes functionality to sync Google contacts (exported as VCF) to iCloud contacts. This is a one-way sync that will:
+- Add new contacts from the VCF file to iCloud
+- Remove iCloud contacts that don't exist in the VCF file
+- Skip existing contacts that are already in iCloud
+
+### Usage
+
+After exporting your Google contacts to a VCF file, run:
+
+```bash
+swift run sync-to-icloud output.vcf
+```
+
+This will:
+1. Request access to your macOS Contacts (you'll need to grant permission)
+2. Load your existing iCloud contacts
+3. Compare them with the contacts in the VCF file
+4. Add any new contacts from the VCF file
+5. Remove any iCloud contacts that don't exist in the VCF file
+
+The tool will show progress and statistics about:
+- Number of contacts loaded from iCloud
+- Number of contacts in the VCF file
+- Number of contacts added
+- Number of contacts removed
+
+### Notes
+- This is a one-way sync from Google to iCloud
+- The tool only modifies iCloud contacts
+- Matching is done based on name, email addresses, and phone numbers
+- The sync is performed locally on your machine
+- No data is sent to external servers
+
 ## CSV Format
 
 The generated CSV file includes the following columns:

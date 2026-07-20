@@ -16,6 +16,10 @@ let package = Package(
         .executable(
             name: "google-vcf-export",
             targets: ["google-vcf-export"]
+        ),
+        .executable(
+            name: "sync-to-icloud",
+            targets: ["sync-to-icloud"]
         )
     ],
     dependencies: [
@@ -33,6 +37,12 @@ let package = Package(
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 "SwiftSoup",
+                "Files"
+            ]
+        ),
+        .executableTarget(
+            name: "sync-to-icloud",
+            dependencies: [
                 "Files"
             ]
         ),
